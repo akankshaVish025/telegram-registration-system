@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register with Telegram</title>
+    <script>
+    function onTelegramAuth(user) {
+        const userId = user.id; // Telegram user ID
+        const firstName = user.first_name; // User's first name
+        const lastName = user.last_name; // User's last name
+        const hash = user.hash; // Get the hash from user data
+
+        // Redirect to the backend with query parameters for registration
+        const registerUrl = `/register?id=${userId}&first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}&hash=${hash}`;
+        
+        // Send a GET request to the /register endpoint
+        fetch(registerUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Registration successful!');
+            } else {
+                alert(data.message || 'An error occurred.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
+</head>
+<body>
+    <h1>Register with Telegram</h1>
+    <p>Click the button below to log in with Telegram and register:</p>
+    
+    <!-- Telegram Login Button -->
+    <script async src="https://telegram.org/js/telegram-widget.js?15" 
+        data-telegram-login="next_defi_bot" 
+        data-size="large" 
+        data-auth-url="https://f410-106-201-234-246.ngrok-free.app/register"
+        data-request-access="write" 
+        data-on-auth="onTelegramAuth">
+    </script> <!-- Add backend domain in data-auth-url and call register api-->
+</body>
+</html>
