@@ -11,8 +11,8 @@ const User = require('./models/user');
 const app = express();
 const port = process.env.PORT || 8000;
 
-const BOT_TOKEN = process.env.BOT_TOKEN   // || "7450106894:AAEUbg6tLJ7u09SiWPwc4m-ctvdpCrY-MuM"; // Use environment variable
-const GROUP_CHAT_ID = process.env.GROUP_CHAT_ID    //|| "-4526540368"; // Use environment variable
+const BOT_TOKEN = process.env.BOT_TOKEN
+const GROUP_CHAT_ID = process.env.GROUP_CHAT_ID
 const TELEGRAM_BOT_SECRET = crypto.createHash('sha256').update(BOT_TOKEN).digest();  // Generate secret
 
 app.use(express.static(path.join(__dirname, 'public')));
